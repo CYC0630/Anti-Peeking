@@ -4,4 +4,5 @@
     <string name="ap_mode">AP Mode</string>
     <string name="on">On</string>
     <string name="off">Off</string>
+    <string name="insert_your_own_images"><![CDATA[Insert your own images >]]></string>
 </resources>
