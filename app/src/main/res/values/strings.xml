@@ -1,0 +1,7 @@
+<resources>
+    <string name="app_name">Anti-Peeking</string>
+    <string name="ap_settings">AP Settings</string>
+    <string name="ap_mode">AP Mode</string>
+    <string name="on">On</string>
+    <string name="off">Off</string>
+</resources>
