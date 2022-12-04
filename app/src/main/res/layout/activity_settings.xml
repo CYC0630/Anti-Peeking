@@ -16,11 +16,7 @@
         android:text="@string/ap_settings"
         android:textAlignment="center"
         android:textColor="@android:color/white"
-        android:textSize="20sp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        android:textSize="20sp" />
 
     <androidx.appcompat.widget.SwitchCompat
         android:id="@+id/apModeSwitch"
@@ -33,7 +29,7 @@
         android:textStyle="bold" />
 
     <Button
-        android:id="@+id/button"
+        android:id="@+id/insertImageButton"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="@string/insert_your_own_images"

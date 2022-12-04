@@ -5,4 +5,8 @@
     <string name="on">On</string>
     <string name="off">Off</string>
     <string name="insert_your_own_images"><![CDATA[Insert your own images >]]></string>
+    <string name="gallery">Gallery</string>
+    <string name="my_album">My Album</string>
+    <string name="pokemon_go">Pokemon Go</string>
+    <string name="dcard">Dcard</string>
 </resources>
