@@ -15,9 +15,11 @@ import java.util.ArrayList;
 
 public class GalleryActivity extends AppCompatActivity
 {
-    static ArrayList<View> imageViewArrayList = new ArrayList<>();
+    private final ArrayList<View> imageViewArrayList = new ArrayList<>();
     private ImageView selectedImage;
+    private ImageView firstImage;
     private LinearLayout albumLayout;
+    private final View.OnClickListener onClickListener = view -> selectedImage.setImageDrawable(((ImageView) view).getDrawable());
 
     //this is a comment
     @Override
@@ -30,10 +32,11 @@ public class GalleryActivity extends AppCompatActivity
         for (int i = 0; i < albumLayout.getChildCount(); i++)
             imageViewArrayList.add(albumLayout.getChildAt(i));
 
+        firstImage = (ImageView) imageViewArrayList.get(0);
         selectedImage = findViewById(R.id.selectedImage);
-        selectedImage.setImageDrawable(((ImageView) imageViewArrayList.get(0)).getDrawable());
+        selectedImage.setImageDrawable(firstImage.getDrawable());
         for (View view : imageViewArrayList)
-            view.setOnClickListener(v -> selectedImage.setImageDrawable(((ImageView) v).getDrawable()));
+            view.setOnClickListener(onClickListener);
 
         ActivityResultLauncher<Intent> activityResultLauncher =
                 registerForActivityResult(new ActivityResultContracts.StartActivityForResult(),
@@ -46,6 +49,8 @@ public class GalleryActivity extends AppCompatActivity
                         {
                             ImageView galleryImage = new ImageView(GalleryActivity.this);
                             galleryImage.setImageURI(data.getData());
+                            galleryImage.setLayoutParams(firstImage.getLayoutParams());
+                            galleryImage.setOnClickListener(onClickListener);
                             albumLayout.addView(galleryImage);
                         }
                     }
