@@ -4,6 +4,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Bitmap;
 import android.os.Bundle;
 
 import org.opencv.android.BaseLoaderCallback;
@@ -25,83 +26,110 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 
-public class FaceDetectActivity extends AppCompatActivity {
+public class FaceDetectActivity extends AppCompatActivity
+{
+    static Bitmap bitmap;
+
     JavaCameraView javaCameraView;
-    File caseFile;
     CascadeClassifier faceDetector;
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    protected void onCreate(Bundle savedInstanceState)
+    {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_face_detect);
-        javaCameraView = findViewById(R.id.javaCameraView);
 
-        if (!OpenCVLoader.initDebug()) {
+        javaCameraView = findViewById(R.id.javaCameraView);
+        javaCameraView.setCameraIndex(CameraBridgeViewBase.CAMERA_ID_FRONT);
+
+        if (!OpenCVLoader.initDebug())
             OpenCVLoader.initAsync(OpenCVLoader.OPENCV_VERSION, this, baseCallback);
-        } else {
+        else
             baseCallback.onManagerConnected(LoaderCallbackInterface.SUCCESS);
-        }
 
         javaCameraView.setCvCameraViewListener(new MyViewListener2());
     }
 
-    private final BaseLoaderCallback baseCallback = new BaseLoaderCallback(this) {
+    @Override
+    public void onBackPressed()
+    {
+        super.onBackPressed();
+        finish();
+    }
+
+    private final BaseLoaderCallback baseCallback = new BaseLoaderCallback(this)
+    {
         @Override
-        public void onManagerConnected(int status) {
-            if (status == LoaderCallbackInterface.SUCCESS) {
+        public void onManagerConnected(int status)
+        {
+            if (status == LoaderCallbackInterface.SUCCESS)
+            {
+                File caseFile;
                 InputStream is = getResources().openRawResource(R.raw.haarcascade_frontalface_default);
                 File cascadeDir = getDir("cascade", Context.MODE_PRIVATE);
                 caseFile = new File(cascadeDir, "haarcascade_frontalface_default.xml");
 
-                FileOutputStream fos = null;
-                try {
+                FileOutputStream fos;
+                try
+                {
                     fos = new FileOutputStream(caseFile);
-                } catch (FileNotFoundException e) {
+                }
+                catch (FileNotFoundException e)
+                {
                     e.printStackTrace();
+                    return;
                 }
 
                 byte[] buffer = new byte[4096];
                 int bytesRead = 0;
 
-                while (true) {
-                    try {
-                        if ((bytesRead = is.read(buffer)) == -1) break;
-                    } catch (IOException e) {
+                while (true)
+                {
+                    try
+                    {
+                        if ((bytesRead = is.read(buffer)) == -1)
+                            break;
+                    }
+                    catch (IOException e)
+                    {
                         e.printStackTrace();
                     }
-                    try {
-                        if (fos != null)
-                            fos.write(buffer, 0, bytesRead);
-                    } catch (IOException e) {
+                    try
+                    {
+                        fos.write(buffer, 0, bytesRead);
+                    }
+                    catch (IOException e)
+                    {
                         e.printStackTrace();
                     }
                 }
-                try {
+                try
+                {
                     is.close();
-                    if (fos != null)
-                        fos.close();
-                } catch (IOException e) {
+                    fos.close();
+                }
+                catch (IOException e)
+                {
                     e.printStackTrace();
                 }
 
 
                 faceDetector = new CascadeClassifier(caseFile.getAbsolutePath());
-                if (faceDetector.empty()) {
+                if (faceDetector.empty())
                     faceDetector = null;
-                } else {
+                else
                     if (!cascadeDir.delete())
                         System.out.println("Hi");
-                }
                 javaCameraView.enableView();
-            } else {
-                super.onManagerConnected(status);
             }
+            else
+                super.onManagerConnected(status);
         }
     };
 
     class MyViewListener2 implements CameraBridgeViewBase.CvCameraViewListener2
     {
-        private Mat mRgba,mGrey;
+        private Mat mRgba, mGrey;
 
         @Override
         public void onCameraViewStarted(int width, int height)
@@ -125,16 +153,16 @@ public class FaceDetectActivity extends AppCompatActivity {
 
             //detect Face
             MatOfRect faceDetections = new MatOfRect();
-            faceDetector.detectMultiScale(mRgba,faceDetections);
+            faceDetector.detectMultiScale(mRgba, faceDetections);
             //   int count=0;
             Rect[] faces = faceDetections.toArray();
-            for (Rect rect: faces)
+            for (Rect rect : faces)
             {
                 //     count++;
                 //     if(count>1)
-                Imgproc.rectangle(mRgba, new Point(rect.x,rect.y),
+                Imgproc.rectangle(mRgba, new Point(rect.x, rect.y),
                         new Point(rect.x + rect.width, rect.y + rect.height),
-                        new Scalar(255,0,0));
+                        new Scalar(255, 0, 0));
             }
 
             if (faces.length > 1)

@@ -6,6 +6,8 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.graphics.drawable.BitmapDrawable;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ImageView;
@@ -19,7 +21,12 @@ public class GalleryActivity extends AppCompatActivity
     private ImageView selectedImage;
     private ImageView firstImage;
     private LinearLayout albumLayout;
-    private final View.OnClickListener onClickListener = view -> selectedImage.setImageDrawable(((ImageView) view).getDrawable());
+    private final View.OnClickListener onClickListener = view ->
+    {
+        Drawable drawable = ((ImageView) view).getDrawable();
+        selectedImage.setImageDrawable(drawable);
+        FaceDetectActivity.bitmap = ((BitmapDrawable) drawable).getBitmap();
+    };
 
     //this is a comment
     @Override

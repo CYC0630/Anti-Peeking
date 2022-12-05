@@ -4,6 +4,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.SwitchCompat;
 
 import android.content.Intent;
+import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.widget.Button;
 
@@ -14,6 +15,9 @@ public class SettingsActivity extends AppCompatActivity
     {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_settings);
+
+        FaceDetectActivity.bitmap = BitmapFactory.decodeResource(getResources(), R.drawable.pokemon_go);
+
         //------switch and open detect face-------
         SwitchCompat apModeSwitch = findViewById(R.id.apModeSwitch);
         apModeSwitch.setOnCheckedChangeListener(((buttonView, isChecked) ->
