@@ -6,22 +6,20 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     tools:context=".GalleryActivity">
+
     <RelativeLayout
-        xmlns:android="http://schemas.android.com/apk/res/android"
         android:layout_width="match_parent"
         android:layout_height="64dp"
         android:background="#211F77">
-        <RelativeLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:padding="16dp"/>
+
         <ImageView
+            android:id="@+id/leftIconImage"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:id="@+id/left_icon"
             android:layout_centerVertical="true"
             android:layout_marginStart="20sp"
-            android:src="@drawable/ic_baseline_arrow_back_24"/>
+            android:src="@drawable/ic_baseline_arrow_back_24"
+            android:contentDescription="@string/left_icon" />
 
         <TextView
             android:id="@+id/title"
@@ -29,64 +27,70 @@
             android:layout_height="wrap_content"
             android:layout_centerVertical="true"
             android:layout_marginStart="170dp"
-            android:layout_marginLeft="50dp"
             android:layout_marginEnd="309dp"
-            android:text="Gallery"
+            android:text="@string/gallery"
             android:textColor="@android:color/white"
-            android:textSize="20dp" />
+            android:textSize="20sp" />
 
         <ImageView
-            android:id="@+id/right_icon"
+            android:id="@+id/rightIconImage"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentEnd="true"
             android:layout_centerVertical="true"
             android:layout_marginEnd="20dp"
-            android:src="@drawable/ic_baseline_add_24" />
+            android:src="@drawable/ic_baseline_add_24"
+            android:contentDescription="@string/right_icon" />
 
 
     </RelativeLayout>
 
-
     <TextView
         android:id="@+id/albumText"
-        android:layout_width="150dp"
-        android:layout_height="40dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
         android:layout_marginStart="20dp"
         android:layout_marginTop="40dp"
         android:text="@string/my_album"
         android:textColor="@color/black"
         android:textSize="32sp" />
 
-     <ScrollView
+    <ImageView
+        android:id="@+id/selectedImage"
+        android:layout_width="match_parent"
+        android:layout_height="180dp"
+        android:contentDescription="@string/selected_image" />
+
+     <HorizontalScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:contentDescription="@string/gallery">
 
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+         <LinearLayout
+             android:id="@+id/albumLayout"
+             android:layout_width="wrap_content"
+             android:layout_height="match_parent">
 
-            <ImageView
-                android:id="@+id/pokemonGoImage"
-                android:layout_width="145dp"
-                android:layout_height="250dp"
-                android:layout_marginStart="20dp"
-                android:layout_marginTop="40dp"
-                android:contentDescription="@string/pokemon_go"
-                app:srcCompat="@drawable/pokemon_go" />
+             <ImageView
+                 android:id="@+id/pokemonGoImage"
+                 android:layout_width="145dp"
+                 android:layout_height="250dp"
+                 android:layout_marginStart="20dp"
+                 android:layout_marginTop="40dp"
+                 android:contentDescription="@string/pokemon_go"
+                 app:srcCompat="@drawable/pokemon_go" />
 
-            <ImageView
-                android:id="@+id/dcardImage"
-                android:layout_width="145dp"
-                android:layout_height="250dp"
-                android:layout_marginStart="32dp"
-                android:layout_marginTop="40dp"
-                android:contentDescription="@string/dcard"
-                app:srcCompat="@drawable/dcard" />
+             <ImageView
+                 android:id="@+id/dcardImage"
+                 android:layout_width="145dp"
+                 android:layout_height="250dp"
+                 android:layout_marginStart="32dp"
+                 android:layout_marginTop="40dp"
+                 android:contentDescription="@string/dcard"
+                 app:srcCompat="@drawable/dcard" />
 
-        </LinearLayout>
-    </ScrollView>
+         </LinearLayout>
+    </HorizontalScrollView>
 
 
 </LinearLayout>

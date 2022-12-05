@@ -28,6 +28,6 @@ public class SettingsActivity extends AppCompatActivity
         });
 
         Button insertImageButton = findViewById(R.id.insertImageButton);
-        insertImageButton.setOnClickListener(view->startActivity(new Intent(SettingsActivity.this, GalleryActivity.class)));
+        insertImageButton.setOnClickListener(view -> startActivity(new Intent(SettingsActivity.this, GalleryActivity.class)));
     }
 }
