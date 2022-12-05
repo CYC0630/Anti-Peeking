@@ -6,17 +6,8 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     tools:context=".GalleryActivity">
+    <include layout="@layout/tools_bar"/>
 
-    <TextView
-        android:id="@+id/apSettingsText"
-        android:layout_width="match_parent"
-        android:layout_height="64dp"
-        android:background="#211F77"
-        android:gravity="center"
-        android:text="@string/gallery"
-        android:textAlignment="center"
-        android:textColor="@android:color/white"
-        android:textSize="20sp" />
 
     <TextView
         android:id="@+id/albumText"
@@ -28,7 +19,7 @@
         android:textColor="@color/black"
         android:textSize="32sp" />
 
-    <ScrollView
+     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:contentDescription="@string/gallery">
