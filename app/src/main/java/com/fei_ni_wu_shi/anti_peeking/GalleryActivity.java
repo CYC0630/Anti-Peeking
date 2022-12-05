@@ -6,7 +6,7 @@ import android.os.Bundle;
 
 public class GalleryActivity extends AppCompatActivity
 {
-
+    //this is a comment
     @Override
     protected void onCreate(Bundle savedInstanceState)
     {
