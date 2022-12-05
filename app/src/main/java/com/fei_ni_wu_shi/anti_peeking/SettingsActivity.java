@@ -15,6 +15,6 @@ public class SettingsActivity extends AppCompatActivity
         setContentView(R.layout.activity_settings);
 
         Button insertImageButton = findViewById(R.id.insertImageButton);
-        insertImageButton.setOnClickListener(view->startActivity(new Intent(SettingsActivity.this, GalleryActivity.class)));
+        insertImageButton.setOnClickListener(view -> startActivity(new Intent(SettingsActivity.this, GalleryActivity.class)));
     }
 }

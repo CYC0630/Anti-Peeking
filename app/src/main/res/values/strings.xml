@@ -9,4 +9,7 @@
     <string name="my_album">My Album</string>
     <string name="pokemon_go">Pokemon Go</string>
     <string name="dcard">Dcard</string>
+    <string name="left_icon">Left Icon</string>
+    <string name="right_icon">Right Icon</string>
+    <string name="selected_image">Selected Image</string>
 </resources>
