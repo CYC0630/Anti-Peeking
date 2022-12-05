@@ -20,11 +20,13 @@
 
     <TextView
         android:id="@+id/albumText"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_width="150dp"
+        android:layout_height="40dp"
+        android:layout_marginLeft="20dp"
+        android:layout_marginTop="40dp"
         android:text="@string/my_album"
         android:textColor="@color/black"
-        android:textSize="34sp" />
+        android:textSize="32sp" />
 
     <ScrollView
         android:layout_width="match_parent"
@@ -33,22 +35,26 @@
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical">
+            android:layout_height="wrap_content">
 
             <ImageView
                 android:id="@+id/pokemonGoImage"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                app:srcCompat="@drawable/pokemon_go"
-                android:contentDescription="@string/pokemon_go" />
+                android:layout_width="145dp"
+                android:layout_height="250dp"
+                android:layout_marginLeft="20dp"
+                android:layout_marginTop="40dp"
+                android:contentDescription="@string/pokemon_go"
+                app:srcCompat="@drawable/pokemon_go" />
 
             <ImageView
                 android:id="@+id/dcardImage"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                app:srcCompat="@drawable/dcard"
-                android:contentDescription="@string/dcard" />
+                android:layout_width="145dp"
+                android:layout_height="250dp"
+                android:layout_marginLeft="32dp"
+                android:layout_marginTop="40dp"
+                android:contentDescription="@string/dcard"
+                app:srcCompat="@drawable/dcard" />
+
         </LinearLayout>
     </ScrollView>
 

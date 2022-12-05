@@ -20,19 +20,29 @@
 
     <androidx.appcompat.widget.SwitchCompat
         android:id="@+id/apModeSwitch"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_width="171dp"
+        android:layout_height="19dp"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentTop="true"
+        android:layout_marginLeft="37dp"
+        android:layout_marginTop="143dp"
+        android:rotationY="-8"
         android:text="@string/ap_mode"
         android:textOff="@string/off"
         android:textOn="@string/on"
-        android:textSize="24sp"
+        android:textSize="20sp"
         android:textStyle="bold" />
 
     <Button
         android:id="@+id/insertImageButton"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_width="wrap_content"
+        android:layout_height="45dp"
+        android:layout_marginLeft="24dp"
+        android:layout_marginTop="10dp"
         android:text="@string/insert_your_own_images"
-        android:textAllCaps="false" />
+        android:textAllCaps="false"
+        android:textSize="18sp"
+        android:textStyle="normal"
+        android:textColor="@android:color/background_dark"/>
 
 </LinearLayout>
