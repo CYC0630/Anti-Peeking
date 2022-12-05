@@ -3,6 +3,7 @@ package com.fei_ni_wu_shi.anti_peeking;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 
 import org.opencv.android.BaseLoaderCallback;
@@ -24,17 +25,16 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 
-public class FaceDetectActivity extends AppCompatActivity implements CameraBridgeViewBase.CvCameraViewListener2 {
+public class FaceDetectActivity extends AppCompatActivity {
     JavaCameraView javaCameraView;
     File caseFile;
     CascadeClassifier faceDetector;
-    private Mat mRgba,mGrey;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_face_detect);
-        javaCameraView = (JavaCameraView) findViewById(R.id.javaCameraView);
+        javaCameraView = findViewById(R.id.javaCameraView);
 
         if (!OpenCVLoader.initDebug()) {
             OpenCVLoader.initAsync(OpenCVLoader.OPENCV_VERSION, this, baseCallback);
@@ -42,39 +42,7 @@ public class FaceDetectActivity extends AppCompatActivity implements CameraBridg
             baseCallback.onManagerConnected(LoaderCallbackInterface.SUCCESS);
         }
 
-        javaCameraView.setCvCameraViewListener(this);
-    }
-    @Override
-    public void onCameraViewStarted(int width, int height) {
-        mRgba = new Mat();
-        mGrey = new Mat();
-
-    }
-
-    @Override
-    public void onCameraViewStopped() {
-        mRgba.release();
-        mGrey.release();
-    }
-
-    @Override
-    public Mat onCameraFrame(CameraBridgeViewBase.CvCameraViewFrame inputFrame) {
-        mRgba = inputFrame.rgba();
-        mGrey = inputFrame.gray();
-
-        //detect Face
-        MatOfRect facedetections = new MatOfRect();
-        faceDetector.detectMultiScale(mRgba,facedetections);
-        //   int count=0;
-        for(Rect react: facedetections.toArray()){
-            //     count++;
-            //     if(count>1)
-            Imgproc.rectangle(mRgba, new Point(react.x,react.y),
-                    new Point(react.x + react.width, react.y + react.height),
-                    new Scalar(255,0,0));
-        }
-
-        return mRgba;
+        javaCameraView.setCvCameraViewListener(new MyViewListener2());
     }
 
     private final BaseLoaderCallback baseCallback = new BaseLoaderCallback(this) {
@@ -102,16 +70,16 @@ public class FaceDetectActivity extends AppCompatActivity implements CameraBridg
                         e.printStackTrace();
                     }
                     try {
-                        assert fos != null;
-                        fos.write(buffer, 0, bytesRead);
+                        if (fos != null)
+                            fos.write(buffer, 0, bytesRead);
                     } catch (IOException e) {
                         e.printStackTrace();
                     }
                 }
                 try {
                     is.close();
-                    assert fos != null;
-                    fos.close();
+                    if (fos != null)
+                        fos.close();
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
@@ -121,7 +89,8 @@ public class FaceDetectActivity extends AppCompatActivity implements CameraBridg
                 if (faceDetector.empty()) {
                     faceDetector = null;
                 } else {
-                    cascadeDir.delete();
+                    if (!cascadeDir.delete())
+                        System.out.println("Hi");
                 }
                 javaCameraView.enableView();
             } else {
@@ -129,4 +98,49 @@ public class FaceDetectActivity extends AppCompatActivity implements CameraBridg
             }
         }
     };
+
+    class MyViewListener2 implements CameraBridgeViewBase.CvCameraViewListener2
+    {
+        private Mat mRgba,mGrey;
+
+        @Override
+        public void onCameraViewStarted(int width, int height)
+        {
+            mRgba = new Mat();
+            mGrey = new Mat();
+        }
+
+        @Override
+        public void onCameraViewStopped()
+        {
+            mRgba.release();
+            mGrey.release();
+        }
+
+        @Override
+        public Mat onCameraFrame(CameraBridgeViewBase.CvCameraViewFrame inputFrame)
+        {
+            mRgba = inputFrame.rgba();
+            mGrey = inputFrame.gray();
+
+            //detect Face
+            MatOfRect faceDetections = new MatOfRect();
+            faceDetector.detectMultiScale(mRgba,faceDetections);
+            //   int count=0;
+            Rect[] faces = faceDetections.toArray();
+            for (Rect rect: faces)
+            {
+                //     count++;
+                //     if(count>1)
+                Imgproc.rectangle(mRgba, new Point(rect.x,rect.y),
+                        new Point(rect.x + rect.width, rect.y + rect.height),
+                        new Scalar(255,0,0));
+            }
+
+            if (faces.length > 1)
+                startActivity(new Intent(FaceDetectActivity.this, BlockImageActivity.class));
+
+            return mRgba;
+        }
+    }
 }

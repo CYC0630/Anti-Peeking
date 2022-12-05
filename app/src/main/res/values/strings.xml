@@ -12,4 +12,5 @@
     <string name="left_icon">Left Icon</string>
     <string name="right_icon">Right Icon</string>
     <string name="selected_image">Selected Image</string>
+    <string name="block_image">Block Image</string>
 </resources>
