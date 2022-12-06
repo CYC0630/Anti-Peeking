@@ -13,9 +13,9 @@ import android.webkit.WebViewClient;
 
 import org.opencv.android.BaseLoaderCallback;
 import org.opencv.android.CameraBridgeViewBase;
-import org.opencv.android.JavaCameraView;
 import org.opencv.android.LoaderCallbackInterface;
 import org.opencv.android.OpenCVLoader;
+import org.opencv.core.Core;
 import org.opencv.core.Mat;
 import org.opencv.core.MatOfRect;
 import org.opencv.core.Point;
@@ -33,7 +33,7 @@ import java.io.InputStream;
 public class FaceDetectActivity extends AppCompatActivity
 {
     static Bitmap bitmap;
-
+    
     JavaCameraView javaCameraView;
     CascadeClassifier faceDetector;
 
@@ -129,7 +129,7 @@ public class FaceDetectActivity extends AppCompatActivity
         }
     };
 
-    class MyViewListener2 implements CameraBridgeViewBase.CvCameraViewListener2
+    class MyViewListener2 implements MyCameraBridgeViewBase.CvCameraViewListener2
     {
         private Mat mRgba, mGrey;
 
@@ -148,7 +148,7 @@ public class FaceDetectActivity extends AppCompatActivity
         }
 
         @Override
-        public Mat onCameraFrame(CameraBridgeViewBase.CvCameraViewFrame inputFrame)
+        public Mat onCameraFrame(MyCameraBridgeViewBase.CvCameraViewFrame inputFrame)
         {
             mRgba = inputFrame.rgba();
             mGrey = inputFrame.gray();
@@ -167,10 +167,17 @@ public class FaceDetectActivity extends AppCompatActivity
                         new Scalar(255, 0, 0));
             }
 
-            if (faces.length > 1)
+            if (faces.length > 2)
                 startActivity(new Intent(FaceDetectActivity.this, BlockImageActivity.class));
 
+            Core.rotate(mRgba, mRgba, Core.ROTATE_90_COUNTERCLOCKWISE);
+            Core.rotate(mGrey, mGrey, Core.ROTATE_90_COUNTERCLOCKWISE);
+            Core.flip(mRgba, mRgba, 1);
+            Core.flip(mGrey, mGrey, 1);
+
             return mRgba;
+
         }
     }
 }
+

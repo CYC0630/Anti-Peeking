@@ -10,6 +10,7 @@ import android.widget.Button;
 
 public class SettingsActivity extends AppCompatActivity
 {
+
     @Override
     protected void onCreate(Bundle savedInstanceState)
     {
@@ -25,7 +26,6 @@ public class SettingsActivity extends AppCompatActivity
             if (isChecked)
                 startActivity(new Intent(SettingsActivity.this, FaceDetectActivity.class));
         }));
-
 
         Button insertImageButton = findViewById(R.id.insertImageButton);
         insertImageButton.setOnClickListener(view -> startActivity(new Intent(SettingsActivity.this, GalleryActivity.class)));
