@@ -13,6 +13,7 @@ import android.webkit.WebViewClient;
 
 import org.opencv.android.BaseLoaderCallback;
 import org.opencv.android.CameraBridgeViewBase;
+import org.opencv.android.JavaCameraView;
 import org.opencv.android.LoaderCallbackInterface;
 import org.opencv.android.OpenCVLoader;
 import org.opencv.core.Core;
@@ -25,7 +26,6 @@ import org.opencv.imgproc.Imgproc;
 import org.opencv.objdetect.CascadeClassifier;
 
 import java.io.File;
-import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
@@ -80,10 +80,9 @@ public class FaceDetectActivity extends AppCompatActivity
         {
             if (status == LoaderCallbackInterface.SUCCESS)
             {
-                File caseFile;
                 InputStream is = getResources().openRawResource(R.raw.haarcascade_frontalface_default);
                 File cascadeDir = getDir("cascade", Context.MODE_PRIVATE);
-                caseFile = new File(cascadeDir, "haarcascade_frontalface_default.xml");
+                File caseFile = new File(cascadeDir, "haarcascade_frontalface_default.xml");
 
                 FileOutputStream fos;
 
@@ -129,7 +128,7 @@ public class FaceDetectActivity extends AppCompatActivity
         }
     };
 
-    class MyViewListener2 implements MyCameraBridgeViewBase.CvCameraViewListener2
+    class MyViewListener2 implements CameraBridgeViewBase.CvCameraViewListener2
     {
         private Mat mRgba, mGrey;
 
@@ -148,7 +147,7 @@ public class FaceDetectActivity extends AppCompatActivity
         }
 
         @Override
-        public Mat onCameraFrame(MyCameraBridgeViewBase.CvCameraViewFrame inputFrame)
+        public Mat onCameraFrame(CameraBridgeViewBase.CvCameraViewFrame inputFrame)
         {
             mRgba = inputFrame.rgba();
             mGrey = inputFrame.gray();

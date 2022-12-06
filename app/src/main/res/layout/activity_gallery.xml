@@ -60,7 +60,7 @@
         android:id="@+id/selectedImage"
         android:layout_width="match_parent"
         android:layout_height="180dp"
-        android:contentDescription="@string/selected_image" />
+        android:contentDescription="@string/user_selected_image" />
 
      <HorizontalScrollView
         android:layout_width="match_parent"

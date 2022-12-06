@@ -37,13 +37,15 @@ public class GalleryActivity extends AppCompatActivity
 
         albumLayout = findViewById(R.id.albumLayout);
         for (int i = 0; i < albumLayout.getChildCount(); i++)
-            imageViewArrayList.add(albumLayout.getChildAt(i));
+        {
+            View view = albumLayout.getChildAt(i);
+            view.setOnClickListener(onClickListener);
+            imageViewArrayList.add(view); //store all the images in albumLayout to imageViewArrayList
+        }
 
         firstImage = (ImageView) imageViewArrayList.get(0);
         selectedImage = findViewById(R.id.selectedImage);
         selectedImage.setImageDrawable(firstImage.getDrawable());
-        for (View view : imageViewArrayList)
-            view.setOnClickListener(onClickListener);
 
         ActivityResultLauncher<Intent> activityResultLauncher =
                 registerForActivityResult(new ActivityResultContracts.StartActivityForResult(),
