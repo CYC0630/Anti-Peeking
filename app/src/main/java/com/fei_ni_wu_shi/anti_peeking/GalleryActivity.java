@@ -65,5 +65,13 @@ public class GalleryActivity extends AppCompatActivity
 
         findViewById(R.id.rightIconImage).setOnClickListener(view ->
                 activityResultLauncher.launch(new Intent(Intent.ACTION_OPEN_DOCUMENT).addCategory(Intent.CATEGORY_OPENABLE).setType("image/*")));
+
+        findViewById(R.id.leftIconImage).setOnClickListener(view -> onBackPressed());
+    }
+
+    @Override
+    public void onBackPressed()
+    {
+        super.onBackPressed();
     }
 }
