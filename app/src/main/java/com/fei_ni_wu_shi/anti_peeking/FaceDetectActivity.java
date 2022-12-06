@@ -33,7 +33,6 @@ import java.io.InputStream;
 public class FaceDetectActivity extends AppCompatActivity
 {
     static Bitmap bitmap;
-    private WebView webView;
 
     JavaCameraView javaCameraView;
     CascadeClassifier faceDetector;
@@ -44,12 +43,16 @@ public class FaceDetectActivity extends AppCompatActivity
     {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_face_detect);
-        webView=(WebView)findViewById(R.id.webview);
-        webView.setWebViewClient(new WebViewClient());
-        webView.loadUrl("https://www.wikipedia.org/");
 
-        WebSettings webSettings = webView.getSettings();
-        webSettings.setJavaScriptEnabled(true);
+        new Thread(() ->
+        {
+            WebView webView = findViewById(R.id.webView);
+            webView.setWebViewClient(new WebViewClient());
+            webView.loadUrl("https://www.wikipedia.org/");
+
+            WebSettings webSettings = webView.getSettings();
+            webSettings.setJavaScriptEnabled(true);
+        }).start();
 
         javaCameraView = findViewById(R.id.javaCameraView);
         javaCameraView.setCameraIndex(CameraBridgeViewBase.CAMERA_ID_FRONT);
@@ -61,7 +64,6 @@ public class FaceDetectActivity extends AppCompatActivity
             baseCallback.onManagerConnected(LoaderCallbackInterface.SUCCESS);
 
         javaCameraView.setCvCameraViewListener(new MyViewListener2());
-
     }
 
     @Override
@@ -84,37 +86,23 @@ public class FaceDetectActivity extends AppCompatActivity
                 caseFile = new File(cascadeDir, "haarcascade_frontalface_default.xml");
 
                 FileOutputStream fos;
-                try
-                {
-                    fos = new FileOutputStream(caseFile);
-                }
-                catch (FileNotFoundException e)
-                {
-                    e.printStackTrace();
-                    return;
-                }
 
                 byte[] buffer = new byte[4096];
-                int bytesRead = 0;
+                int bytesRead ;
 
                 while (true)
                 {
                     try
                     {
+                        fos = new FileOutputStream(caseFile);
                         if ((bytesRead = is.read(buffer)) == -1)
                             break;
-                    }
-                    catch (IOException e)
-                    {
-                        e.printStackTrace();
-                    }
-                    try
-                    {
                         fos.write(buffer, 0, bytesRead);
                     }
                     catch (IOException e)
                     {
                         e.printStackTrace();
+                        return;
                     }
                 }
                 try
