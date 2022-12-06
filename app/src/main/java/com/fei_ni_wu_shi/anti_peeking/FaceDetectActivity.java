@@ -2,10 +2,14 @@ package com.fei_ni_wu_shi.anti_peeking;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.os.Bundle;
+import android.webkit.WebSettings;
+import android.webkit.WebView;
+import android.webkit.WebViewClient;
 
 import org.opencv.android.BaseLoaderCallback;
 import org.opencv.android.CameraBridgeViewBase;
@@ -29,18 +33,27 @@ import java.io.InputStream;
 public class FaceDetectActivity extends AppCompatActivity
 {
     static Bitmap bitmap;
+    private WebView webView;
 
     JavaCameraView javaCameraView;
     CascadeClassifier faceDetector;
 
+    @SuppressLint("SetJavaScriptEnabled")
     @Override
     protected void onCreate(Bundle savedInstanceState)
     {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_face_detect);
+        webView=(WebView)findViewById(R.id.webview);
+        webView.setWebViewClient(new WebViewClient());
+        webView.loadUrl("https://www.wikipedia.org/");
+
+        WebSettings webSettings = webView.getSettings();
+        webSettings.setJavaScriptEnabled(true);
 
         javaCameraView = findViewById(R.id.javaCameraView);
         javaCameraView.setCameraIndex(CameraBridgeViewBase.CAMERA_ID_FRONT);
+        javaCameraView.setAlpha(0);
 
         if (!OpenCVLoader.initDebug())
             OpenCVLoader.initAsync(OpenCVLoader.OPENCV_VERSION, this, baseCallback);
@@ -48,6 +61,7 @@ public class FaceDetectActivity extends AppCompatActivity
             baseCallback.onManagerConnected(LoaderCallbackInterface.SUCCESS);
 
         javaCameraView.setCvCameraViewListener(new MyViewListener2());
+
     }
 
     @Override
