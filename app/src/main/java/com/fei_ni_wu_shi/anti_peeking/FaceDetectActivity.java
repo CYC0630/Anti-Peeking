@@ -33,7 +33,6 @@ import java.io.InputStream;
 public class FaceDetectActivity extends AppCompatActivity
 {
     static Bitmap bitmap;
-    private WebView webView;
 
     JavaCameraView javaCameraView;
     CascadeClassifier faceDetector;
@@ -44,7 +43,7 @@ public class FaceDetectActivity extends AppCompatActivity
     {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_face_detect);
-        webView=(WebView)findViewById(R.id.webview);
+        WebView webView = (WebView) findViewById(R.id.webview);
         webView.setWebViewClient(new WebViewClient());
         webView.loadUrl("https://www.wikipedia.org/");
 
@@ -95,7 +94,7 @@ public class FaceDetectActivity extends AppCompatActivity
                 }
 
                 byte[] buffer = new byte[4096];
-                int bytesRead = 0;
+                int bytesRead;
 
                 while (true)
                 {
@@ -103,13 +102,6 @@ public class FaceDetectActivity extends AppCompatActivity
                     {
                         if ((bytesRead = is.read(buffer)) == -1)
                             break;
-                    }
-                    catch (IOException e)
-                    {
-                        e.printStackTrace();
-                    }
-                    try
-                    {
                         fos.write(buffer, 0, bytesRead);
                     }
                     catch (IOException e)
